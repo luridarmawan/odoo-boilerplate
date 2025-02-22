@@ -1,0 +1,28 @@
+services:
+  odoo:
+    image: odoo:18.0
+    container_name: odoo18-app
+    # platform: linux/arm64
+    restart: always
+    ports:
+      - "8069:8069"
+      - "8072:8072"
+    environment:
+      HOST: ${POSTGRES_HOSTNAME}
+      USER: ${POSTGRES_USERNAME}
+      PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE: ${POSTGRES_DATABASE}
+    volumes:
+      # - odoo-web-data:/var/lib/odoo
+      - odoo18-data:/var/lib/odoo
+      - ./addons:/mnt/extra-addons
+      - ./config:/etc/odoo
+    networks:
+      - odoo18-network
+
+networks:
+  odoo18-network:
+    driver: bridge
+
+volumes:
+  odoo18-data:
