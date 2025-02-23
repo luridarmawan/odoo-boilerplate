@@ -31,9 +31,15 @@ Boilerplate ini menyediakan konfigurasi Docker untuk menjalankan Odoo 18 dengan 
 2. **Edit file `.env`** sesuai dengan konfigurasi database yang ada di host.
 
 ## 🚀 Menjalankan Odoo
-```sh
-docker compose up -d
-```
+Anda dapat memulai Odoo dengan dua cara:
+1. **Menjalankan dengan output log di terminal:**
+   ```sh
+   docker compose up
+   ```
+2. **Menjalankan di background (detached mode):**
+   ```sh
+   docker compose up -d
+   ```
 Odoo akan berjalan di **http://localhost:8069**.
 
 ## 📦 Menambahkan Modul Tambahan
