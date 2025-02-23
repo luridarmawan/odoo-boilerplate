@@ -1,5 +1,5 @@
 .env
 .DS_Store
-addons/
-config/
-plugins/
+addons/*
+config/*
+!.gitkeep
