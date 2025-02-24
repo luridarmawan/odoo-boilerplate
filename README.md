@@ -57,6 +57,8 @@ docker compose down
 
 ## 🛠 Custom Konfigurasi
 
+File konfigurasi odoo berada di `config/odoo.conf`.
+
 ```bash
 [options]
 .
