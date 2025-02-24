@@ -12,6 +12,11 @@ services:
       USER: ${POSTGRES_USERNAME}
       PASSWORD: ${POSTGRES_PASSWORD}
       DATABASE: ${POSTGRES_DATABASE}
+      # PROXY_MODE: true
+      # LIST_DB: false
+      # DBFILTER: ^%h$
+      # # DBFILTER: .*
+      # OE_ALLOW_DATABASES: false
     volumes:
       # - odoo-web-data:/var/lib/odoo
       - odoo18-data:/var/lib/odoo

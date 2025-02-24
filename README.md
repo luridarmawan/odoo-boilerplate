@@ -55,4 +55,22 @@ Odoo akan berjalan di **http://localhost:8069**.
 docker compose down
 ```
 
+## 🛠 Custom Konfigurasi
 
+```bash
+[options]
+.
+.
+.
+proxy_mode = True
+#dbfilter = ^%h$
+DBFILTER=.*
+list_db = False 
+```
+
+
+| Variabel | Deskripsi |
+|---|---|
+| `proxy_mode` | Gunakan pilihan ini jika akan menggunakan Multi-Database Berdasarkan Domain |
+| `list_db` | Untuk menampilkan atau menyembunyikan fitur 'Manage Database' |
+| `dbfilter` | Filter tampilan daftar database<br>`.*`: menampilkan semua database<br>`^%h$`: menampilkan berdasarkan domain |
