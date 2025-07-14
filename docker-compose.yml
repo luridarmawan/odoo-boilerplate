@@ -3,25 +3,26 @@ services:
     image: odoo:18.0
     container_name: odoo18-app
     # platform: linux/arm64
-    restart: always
+    restart: unless-stopped
     ports:
-      - "8069:8069"
-      - "8072:8072"
+      - "${ODOO_PORT}:8069"
+      - "${ODOO_LONG_POLLING_PORT}:8072"
     environment:
       HOST: ${POSTGRES_HOSTNAME}
       USER: ${POSTGRES_USERNAME}
       PASSWORD: ${POSTGRES_PASSWORD}
       DATABASE: ${POSTGRES_DATABASE}
-      # PROXY_MODE: true
-      # LIST_DB: false
+      PROXY_MODE: true
+      LIST_DB: false
       # DBFILTER: ^%h$
       # # DBFILTER: .*
       # OE_ALLOW_DATABASES: false
     volumes:
-      # - odoo-web-data:/var/lib/odoo
       - odoo18-data:/var/lib/odoo
       - ./addons:/mnt/extra-addons
       - ./config:/etc/odoo
+      #- ./config:/etc/odoo:ro # readonly
+      - ./log:/var/log/odoo
     networks:
       - odoo18-network
 
