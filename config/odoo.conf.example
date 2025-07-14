@@ -1,0 +1,12 @@
+
+[options]
+logfile = /var/log/odoo/odoo.log
+addons_path = /mnt/extra-addons
+admin_passwd = your_superadmin_password
+db_host = ${POSTGRES_HOSTNAME}
+db_port = 5432
+db_user = ${POSTGRES_USERNAME}
+db_password = ${POSTGRES_PASSWORD}
+proxy_mode = True
+longpolling_port = 8072
+
