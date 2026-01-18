@@ -6,3 +6,4 @@ config/*
 data/*
 pgbouncer/*
 !.gitkeep
+!pgbouncer/pgbouncer.ini-example

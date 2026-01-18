@@ -1,0 +1,28 @@
+################## Auto generated ##################
+[databases]
+postgres = host=172.30.128.1 port=5432 dbname=postgres
+qhome_dev = host=172.30.128.1 port=5432 auth_user=odoo_user
+
+[pgbouncer]
+listen_addr = 0.0.0.0
+listen_port = 5432
+unix_socket_dir =
+user = postgres
+auth_file = /etc/pgbouncer/userlist.txt
+auth_type = scram-sha-256
+pool_mode = transaction
+max_client_conn = 200
+default_pool_size = 50
+ignore_startup_parameters = extra_float_digits
+
+# Log settings
+admin_users = postgres
+
+
+
+# Connection sanity checks, timeouts
+
+# TLS settings
+
+# Dangerous timeouts
+################## end file ##################

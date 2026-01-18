@@ -13,14 +13,45 @@ Boilerplate ini menyediakan konfigurasi Docker untuk menjalankan Odoo 18 dengan 
 - Menggunakan **Docker Compose** untuk manajemen layanan.
 - Konfigurasi database melalui file `.env`.
 - Dukungan untuk modul tambahan dengan folder `addons`.
+- **PgBouncer** - Connection pooling untuk optimasi koneksi database PostgreSQL.
+
+## 🔌 PgBouncer
+
+PgBouncer adalah connection pooler ringan untuk PostgreSQL yang membantu mengelola koneksi database dengan lebih efisien.
+
+### Keuntungan Menggunakan PgBouncer:
+- **Mengurangi beban koneksi** - Membatasi jumlah koneksi langsung ke PostgreSQL
+- **Meningkatkan performa** - Reuse koneksi yang sudah ada
+- **Skalabilitas lebih baik** - Mendukung lebih banyak pengguna bersamaan
+- **Mode Transaction Pooling** - Optimal untuk Odoo
+
+### Konfigurasi PgBouncer:
+File konfigurasi berada di folder `pgbouncer/`:
+- `pgbouncer.ini` - Konfigurasi utama PgBouncer
+- `userlist.txt` - Daftar user dan password untuk autentikasi
+
+### Environment Variables (docker-compose.yml):
+| Variabel | Nilai Default | Deskripsi |
+|----------|---------------|-----------|
+| `POOL_MODE` | `transaction` | Mode pooling (session/transaction/statement) |
+| `MAX_CLIENT_CONN` | `200` | Maksimum koneksi client |
+| `DEFAULT_POOL_SIZE` | `50` | Ukuran pool default per database |
+| `AUTH_TYPE` | `scram-sha-256` | Metode autentikasi |
 
 ## 📂 Struktur Folder
 ```
 📦 odoo-boilerplate
-├── 📜 docker-compose.yml  # Konfigurasi Docker Compose
-├── 📜 .env.example        # Contoh konfigurasi environment
-├── 📂 addons             # Folder untuk modul tambahan
-└── 📂 config             # Folder untuk konfigurasi Odoo
+├── 📜 docker-compose.yml   # Konfigurasi Docker Compose
+├── 📜 .env.example         # Contoh konfigurasi environment
+├── 📂 addons               # Folder untuk modul tambahan
+├── 📂 config               # Folder untuk konfigurasi Odoo
+│   ├── 📜 odoo.conf.example  # Contoh file konfigurasi Odoo
+│   └── 📜 odoo.conf          # File konfigurasi Odoo (dibuat dari example)
+├── 📂 data                 # Folder untuk data Odoo (filestore, sessions)
+├── 📂 log                  # Folder untuk log Odoo
+└── 📂 pgbouncer            # Folder konfigurasi PgBouncer
+    ├── 📜 pgbouncer.ini      # Konfigurasi PgBouncer
+    └── 📜 userlist.txt       # User list untuk autentikasi
 ```
 
 ## 🛠 Persiapan
@@ -29,6 +60,12 @@ Boilerplate ini menyediakan konfigurasi Docker untuk menjalankan Odoo 18 dengan 
    cp .env.example .env
    ```
 2. **Edit file `.env`** sesuai dengan konfigurasi database yang ada di host.
+
+3. **Salin file konfigurasi Odoo**:
+   ```sh
+   cp config/odoo.conf.example config/odoo.conf
+   ```
+4. **Edit file `config/odoo.conf`** sesuai kebutuhan (opsional).
 
 ## 🚀 Menjalankan Odoo
 Anda dapat memulai Odoo dengan dua cara:
@@ -67,7 +104,7 @@ File konfigurasi odoo berada di `config/odoo.conf`.
 proxy_mode = True
 #dbfilter = ^%h$
 DBFILTER=.*
-list_db = False 
+list_db = False
 ```
 
 
