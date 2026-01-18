@@ -1,12 +1,18 @@
 
 [options]
 logfile = /var/log/odoo/odoo.log
-addons_path = /mnt/extra-addons
+
+addons_path = /usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons
 admin_passwd = your_superadmin_password
-db_host = ${POSTGRES_HOSTNAME}
+
+# host server postgres anda. jika ingin menggunakan pgbouncer, isi db_host dengan "pgbouncer"
+db_host = your_postgres_server
 db_port = 5432
-db_user = ${POSTGRES_USERNAME}
-db_password = ${POSTGRES_PASSWORD}
+db_user = your_postgres_username
+db_password = your_postgres_password
+
+# db_name = your_database_name
+
 proxy_mode = True
 longpolling_port = 8072
 

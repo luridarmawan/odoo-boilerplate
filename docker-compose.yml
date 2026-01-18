@@ -1,34 +1,53 @@
 services:
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    container_name: odoo-pgbouncer
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+      - "6432:6432"
+    volumes:
+      - ./pgbouncer:/etc/pgbouncer
+    environment:
+      DB_HOST: ${POSTGRES_HOSTNAME}
+      DB_PORT: 5432
+      DB_USER:  ${POSTGRES_USERNAME}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      # DB_NAME: ${POSTGRES_DATABASE}
+
+      # PgBouncer config
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: 200
+      DEFAULT_POOL_SIZE: 50
+      AUTH_TYPE: scram-sha-256
+    networks:
+      - odoo-network
+
   odoo:
-    image: odoo:18.0
-    container_name: odoo18-app
+    image: odoo:19.0
+    container_name: odoo-app
     # platform: linux/arm64
     restart: unless-stopped
+    depends_on:
+      - pgbouncer
     ports:
       - "${ODOO_PORT}:8069"
       - "${ODOO_LONG_POLLING_PORT}:8072"
     environment:
-      HOST: ${POSTGRES_HOSTNAME}
-      USER: ${POSTGRES_USERNAME}
-      PASSWORD: ${POSTGRES_PASSWORD}
-      DATABASE: ${POSTGRES_DATABASE}
       PROXY_MODE: true
       LIST_DB: false
       # DBFILTER: ^%h$
       # # DBFILTER: .*
       # OE_ALLOW_DATABASES: false
     volumes:
-      - odoo18-data:/var/lib/odoo
+      - ./data:/var/lib/odoo
       - ./addons:/mnt/extra-addons
       - ./config:/etc/odoo
       #- ./config:/etc/odoo:ro # readonly
       - ./log:/var/log/odoo
     networks:
-      - odoo18-network
+      - odoo-network
 
 networks:
-  odoo18-network:
+  odoo-network:
     driver: bridge
-
-volumes:
-  odoo18-data:
