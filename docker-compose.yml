@@ -8,6 +8,7 @@ services:
       - "6432:6432"
     volumes:
       - ./pgbouncer:/etc/pgbouncer
+      - ./log:/var/log/pgbouncer
     environment:
       DB_HOST: ${POSTGRES_HOSTNAME}
       DB_PORT: 5432
@@ -20,6 +21,8 @@ services:
       MAX_CLIENT_CONN: 200
       DEFAULT_POOL_SIZE: 50
       AUTH_TYPE: scram-sha-256
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - odoo-network
 
@@ -28,8 +31,8 @@ services:
     container_name: odoo-app
     # platform: linux/arm64
     restart: unless-stopped
-    depends_on:
-      - pgbouncer
+    # depends_on:
+      # - pgbouncer
     ports:
       - "${ODOO_PORT}:8069"
       - "${ODOO_LONG_POLLING_PORT}:8072"
@@ -45,6 +48,8 @@ services:
       - ./config:/etc/odoo
       #- ./config:/etc/odoo:ro # readonly
       - ./log:/var/log/odoo
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - odoo-network
 
