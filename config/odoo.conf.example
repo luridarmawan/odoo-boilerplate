@@ -1,6 +1,7 @@
 
 [options]
 logfile = /var/log/odoo/odoo.log
+log_level = debug
 
 addons_path = /usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons
 admin_passwd = your_superadmin_password
