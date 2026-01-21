@@ -10,6 +10,7 @@ services:
       - ./pgbouncer:/etc/pgbouncer
       - ./log:/var/log/pgbouncer
     environment:
+      TZ: Asia/Jakarta
       DB_HOST: ${POSTGRES_HOSTNAME}
       DB_PORT: 5432
       DB_USER:  ${POSTGRES_USERNAME}

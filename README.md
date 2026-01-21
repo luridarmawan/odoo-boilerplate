@@ -115,3 +115,49 @@ list_db = False
 | `proxy_mode` | Use this option if you want to use Multi-Database Based on Domain |
 | `list_db` | To show or hide the 'Manage Database' feature |
 | `dbfilter` | Database list display filter<br>`.*`: show all databases<br>`^%h$`: show based on domain |
+
+## 🔐 Permission (REQUIRED on Linux)
+
+Odoo in the container runs as UID 101. You must set the correct permissions:
+
+```sh
+sudo chown -R 101:101 data addons log
+sudo chmod -R 755 data addons log
+```
+
+> [!WARNING]
+> If permissions are not set correctly, you will encounter this error:
+> ```
+> Permission denied: filestore
+> ```
+
+## 📦 File Upload Location
+
+Odoo uploaded files will be stored on the host at:
+
+```
+./data/.local/share/Odoo/filestore/<database_name>/
+```
+
+## 🧪 Validate Bind Mount (REQUIRED CHECK)
+
+Verify that the bind mount is working correctly:
+
+```sh
+docker exec -it odoo-app bash
+touch /var/lib/odoo/BIND_OK
+exit
+ls data/BIND_OK
+```
+
+If the file `data/BIND_OK` exists, the bind mount is working correctly.
+
+## 🧰 Backup (Recommended)
+
+**Data Backup:**
+```sh
+tar czvf odoo-data-$(date +%F).tar.gz data/
+```
+
+**Database Backup:**
+Backup separately from the PostgreSQL server.
