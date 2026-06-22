@@ -17,7 +17,7 @@ services:
       # DB_NAME: ${POSTGRES_DATABASE}
 
       # PgBouncer config
-      PGBOUNCER_LOG_LEVEL: DEBUG
+      PGBOUNCER_LOG_LEVEL: WARNING
       POOL_MODE: transaction
       MAX_CLIENT_CONN: 200
       DEFAULT_POOL_SIZE: 50
@@ -33,7 +33,7 @@ services:
     # platform: linux/arm64
     restart: unless-stopped
     # depends_on:
-      # - pgbouncer
+    #   - pgbouncer
     ports:
       - "${ODOO_PORT}:8069"
       - "${ODOO_LONG_POLLING_PORT}:8072"

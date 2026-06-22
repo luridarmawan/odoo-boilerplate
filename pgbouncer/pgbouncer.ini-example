@@ -17,6 +17,12 @@ ignore_startup_parameters = extra_float_digits
 
 # Log settings
 logfile = /var/log/pgbouncer/pgbouncer.log
+log_level = warning
+log_connections = 0
+log_disconnections = 0
+log_pooler_errors = 1
+stats_period = 0
+logfile_size = 10485760
 
 admin_users = postgres
 
