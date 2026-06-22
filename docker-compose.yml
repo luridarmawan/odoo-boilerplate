@@ -4,8 +4,7 @@ services:
     container_name: odoo-pgbouncer
     restart: unless-stopped
     ports:
-      - "5432:5432"
-      - "6432:6432"
+      - "${PGBOUNCER_PORT}:5432"
     volumes:
       - ./pgbouncer:/etc/pgbouncer
       - ./log:/var/log/pgbouncer
